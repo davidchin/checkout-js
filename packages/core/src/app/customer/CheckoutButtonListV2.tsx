@@ -1,6 +1,7 @@
 import React, { Fragment, FunctionComponent } from 'react';
 
 import { withCheckout, WithCheckoutProps } from '../checkout';
+import { isEmbedded } from '../embeddedCheckout';
 import { TranslatedString, withLanguage, WithLanguageProps } from '../locale';
 import resolveCheckoutButton from './resolveCheckoutButton';
 
@@ -43,6 +44,7 @@ const CheckoutButtonList: FunctionComponent<
                         containerId={ `${methodId}CheckoutButton` }
                         key={ methodId }
                         language={ language }
+                        isEmbedded={ isEmbedded() }
                         methodId={ methodId }
                         onUnhandledError={ onUnhandledError }
                     />

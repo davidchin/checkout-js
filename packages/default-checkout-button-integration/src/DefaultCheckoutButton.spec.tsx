@@ -15,6 +15,7 @@ describe('DefaultCheckoutButton', () => {
             checkoutService,
             checkoutState: checkoutService.getState(),
             containerId: 'button-container',
+            isEmbedded: true,
             language: createLanguageService(),
             methodId: 'foobar',
             onUnhandledError: jest.fn(),

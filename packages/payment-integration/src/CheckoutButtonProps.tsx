@@ -5,6 +5,7 @@ export default interface CheckoutButtonProps {
     containerId: string;
     checkoutService: CheckoutService;
     checkoutState: CheckoutSelectors;
+    isEmbedded: boolean;
     language: LanguageService;
     onUnhandledError(error: Error): void;
 }
