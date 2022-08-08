@@ -1,0 +1,27 @@
+{
+  "root": "packages/default-checkout-button-integration",
+  "sourceRoot": "packages/default-checkout-button-integration/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/default-checkout-button-integration/**/*.{ts,tsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/packages/default-checkout-button-integration"
+      ],
+      "options": {
+        "jestConfig": "packages/default-checkout-button-integration/jest.config.js"
+      }
+    }
+  },
+  "tags": [
+    "scope:integration",
+    "scope:shared"
+  ]
+}

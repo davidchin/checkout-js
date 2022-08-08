@@ -1,0 +1,1 @@
+export { default as DefaultCheckoutButton } from './DefaultCheckoutButton';

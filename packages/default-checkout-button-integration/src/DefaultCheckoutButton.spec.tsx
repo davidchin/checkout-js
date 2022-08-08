@@ -3,9 +3,9 @@ import { createCheckoutService, createLanguageService } from '@bigcommerce/check
 import { mount } from 'enzyme';
 import React from 'react';
 
-import CheckoutButton from './CheckoutButtonV2';
+import DefaultCheckoutButton from './DefaultCheckoutButton';
 
-describe('CheckoutButton', () => {
+describe('DefaultCheckoutButton', () => {
     let defaultProps: CheckoutButtonProps;
 
     beforeEach(() => {
@@ -27,7 +27,7 @@ describe('CheckoutButton', () => {
         jest.spyOn(checkoutService, 'initializeCustomer')
             .mockResolvedValue(checkoutService.getState());
 
-        mount(<CheckoutButton { ...defaultProps } />);
+        mount(<DefaultCheckoutButton { ...defaultProps } />);
 
         expect(checkoutService.initializeCustomer)
             .toHaveBeenCalledWith({
@@ -47,7 +47,7 @@ describe('CheckoutButton', () => {
         jest.spyOn(checkoutService, 'deinitializeCustomer')
             .mockResolvedValue(checkoutService.getState());
 
-        const component = mount(<CheckoutButton { ...defaultProps } />);
+        const component = mount(<DefaultCheckoutButton { ...defaultProps } />);
 
         component.unmount();
 
@@ -63,7 +63,7 @@ describe('CheckoutButton', () => {
         jest.spyOn(checkoutService, 'initializeCustomer')
             .mockResolvedValue(checkoutService.getState());
 
-        const component = mount(<CheckoutButton { ...defaultProps } />);
+        const component = mount(<DefaultCheckoutButton { ...defaultProps } />);
 
         expect(component.html())
             .toEqual('<div id="button-container"></div>');
