@@ -378,6 +378,10 @@ class Payment extends Component<
                 window.location.reload();
             }
 
+            if (errorType === 'cart_inconsistency') {
+                await loadCheckout();
+            }
+
             if (isErrorWithType(error) && error.body) {
                 const { body, headers, status } = error;
 

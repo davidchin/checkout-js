@@ -25,6 +25,9 @@ export default function mapSubmitOrderErrorMessage(
         case 'cart_changed':
             return translate('shipping.cart_change_error');
 
+        case 'cart_inconsistency':
+            return translate('cart.inconsistency_error');
+
         default:
             if (
                 includes(
