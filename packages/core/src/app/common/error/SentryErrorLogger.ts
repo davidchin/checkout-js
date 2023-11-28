@@ -1,13 +1,16 @@
 import {
+    BrowserClient,
     BrowserOptions,
-    captureException,
+    defaultIntegrations,
+    defaultStackParser,
     Event,
-    init,
+    Hub,
     Integrations,
+    makeFetchTransport,
     SeverityLevel,
     StackFrame,
-    withScope,
 } from '@sentry/browser';
+import { BrowserClientOptions } from '@sentry/browser/types/client';
 import { RewriteFrames } from '@sentry/integrations';
 import { EventHint, Exception } from '@sentry/types';
 
@@ -29,6 +32,7 @@ export interface SentryErrorLoggerOptions {
     errorTypes?: string[];
     publicPath?: string;
     sampleRate?: number;
+    createHub?: (options: BrowserClientOptions) => Hub;
 }
 
 export enum SeverityLevelEnum {
@@ -41,10 +45,12 @@ export enum SeverityLevelEnum {
 export default class SentryErrorLogger implements ErrorLogger {
     private consoleLogger: ErrorLogger;
     private publicPath: string;
+    private hub: Hub;
 
     constructor(config: BrowserOptions, options?: SentryErrorLoggerOptions) {
         const {
             consoleLogger = new NoopErrorLogger(),
+            createHub = (options: BrowserClientOptions) => new Hub(new BrowserClient(options)),
             publicPath = '',
             sampleRate = 0.1,
         } = options || {};
@@ -52,7 +58,7 @@ export default class SentryErrorLogger implements ErrorLogger {
         this.consoleLogger = consoleLogger;
         this.publicPath = publicPath;
 
-        init({
+        const clientOptions = {
             sampleRate,
             beforeSend: this.handleBeforeSend,
             denyUrls: [
@@ -61,6 +67,7 @@ export default class SentryErrorLogger implements ErrorLogger {
                 'sentry~checkout',
             ],
             integrations: [
+                ...defaultIntegrations,
                 new Integrations.GlobalHandlers({
                     onerror: false,
                     onunhandledrejection: true,
@@ -69,8 +76,12 @@ export default class SentryErrorLogger implements ErrorLogger {
                     iteratee: this.handleRewriteFrame,
                 }),
             ],
+            transport: makeFetchTransport,
+            stackParser: defaultStackParser,
             ...config,
-        });
+        };
+
+        this.hub = createHub(clientOptions as BrowserClientOptions);
     }
 
     log(
@@ -81,7 +92,7 @@ export default class SentryErrorLogger implements ErrorLogger {
     ): void {
         this.consoleLogger.log(error, tags, level);
 
-        withScope((scope) => {
+        this.hub.withScope((scope) => {
             const { errorCode = computeErrorCode(error) } = tags || {};
 
             if (errorCode) {
@@ -96,7 +107,7 @@ export default class SentryErrorLogger implements ErrorLogger {
 
             scope.setFingerprint(['{{ default }}']);
 
-            captureException(error);
+            this.hub.captureException(error);
         });
     }
 
