@@ -2,6 +2,7 @@ import {
     Address,
     Cart,
     CartChangedError,
+    CheckoutInitialState,
     CheckoutParams,
     CheckoutSelectors,
     Consignment,
@@ -105,6 +106,7 @@ export interface CheckoutProps {
     embeddedStylesheet: EmbeddedCheckoutStylesheet;
     embeddedSupport: CheckoutSupport;
     errorLogger: ErrorLogger;
+    initialState?: CheckoutInitialState;
     createEmbeddedMessenger(options: EmbeddedCheckoutMessengerOptions): EmbeddedCheckoutMessenger;
 }
 
@@ -142,6 +144,7 @@ export interface WithCheckoutProps {
     steps: CheckoutStepStatus[];
     clearError(error?: Error): void;
     loadCheckout(id: string, options?: RequestOptions<CheckoutParams>): Promise<CheckoutSelectors>;
+    hydrateInitialState(initialState: CheckoutInitialState): Promise<CheckoutSelectors>;
     subscribeToConsignments(subscriber: (state: CheckoutSelectors) => void): () => void;
 }
 
@@ -186,10 +189,14 @@ class Checkout extends Component<
             extensionService,
             loadCheckout,
             subscribeToConsignments,
+            hydrateInitialState,
+            initialState,
         } = this.props;
 
         try {
-            const [{ data }] = await Promise.all([loadCheckout(checkoutId, {
+            const [{ data }] = initialState ?
+                await Promise.all([hydrateInitialState(initialState)]) : 
+                await Promise.all([loadCheckout(checkoutId, {
                 params: {
                     include: [
                         'cart.lineItems.physicalItems.categoryNames',
@@ -197,6 +204,7 @@ class Checkout extends Component<
                     ] as any, // FIXME: Currently the enum is not exported so it can't be used here.
                 },
             }), extensionService.loadExtensions()]);
+            
             extensionService.preloadExtensions();
 
             const { links: { siteLink = '' } = {} } = data.getConfig() || {};

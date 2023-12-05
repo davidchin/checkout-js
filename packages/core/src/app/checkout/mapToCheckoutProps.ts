@@ -52,6 +52,7 @@ export default function mapToCheckoutProps({
         isPriceHiddenFromGuests,
         isShowingWalletButtonsOnTop: walletButtonsOnTopFlag,
         loadCheckout: checkoutService.loadCheckout,
+        hydrateInitialState: checkoutService.hydrate,
         loginUrl,
         cartUrl,
         createAccountUrl,
