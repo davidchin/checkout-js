@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.399.1-prerelease.1701822910605](https://github.com/bigcommerce/checkout-js/compare/v1.399.0...v1.399.1-prerelease.1701822910605) (2023-12-06)
+
+
+### Features
+
+* **checkout:** CHECKOUT-0000 Hydrate initial state ([fd0c006](https://github.com/bigcommerce/checkout-js/commit/fd0c006a1c04e023a7e2516323a55833da576a9a))
+
 ## [1.399.0](https://github.com/bigcommerce/checkout-js/compare/v1.398.0...v1.399.0) (2023-11-09)
 
 
