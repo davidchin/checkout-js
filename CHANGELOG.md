@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.399.1-prerelease.1701924308100](https://github.com/bigcommerce/checkout-js/compare/v1.399.0...v1.399.1-prerelease.1701924308100) (2023-12-07)
+
+
+### Bug Fixes
+
+* **common:** CHECKOUT-6524 Fix Sentry client initialization to avoid conflict ([3b3e5c1](https://github.com/bigcommerce/checkout-js/commit/3b3e5c12d85212e7a7c6ffa2aa4eb16b308d8b5f))
+
 ## [1.399.0](https://github.com/bigcommerce/checkout-js/compare/v1.398.0...v1.399.0) (2023-11-09)
 
 
