@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.520.7-prerelease.1724813814590](https://github.com/bigcommerce/checkout-js/compare/v1.520.6...v1.520.7-prerelease.1724813814590) (2024-08-28)
+
+
+### Bug Fixes
+
+* **checkout:** CHECKOUT-8300 Reset Formik form once initial value is loaded in the shipping step ([f19ff20](https://github.com/bigcommerce/checkout-js/commit/f19ff2064c0d6b739f04d0d8843c00d94e4297a5))
+
 ### [1.520.6](https://github.com/bigcommerce/checkout-js/compare/v1.520.5...v1.520.6) (2024-08-27)
 
 
